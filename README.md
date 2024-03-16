@@ -26,54 +26,56 @@ Central entry point routing requests to microservices, providing a unified inter
 
 ## Functional Services
 
-### Book Service
-Allows users to perform operations on books, view detailed information such as title, author, genre, publication date, and ratings, and interact with comments.
-
-  | Method | Path                          | Description                                                            |
-  |--------|-------------------------------|------------------------------------------------------------------------|
-  | GET    | /api/v1/books/user/{id}/count | Get the count of books voted by a specific user                        |
-  | GET    | /api/v1/books                 | Get all books, optionally sorted by rating or creation date            |
-  | GET    | /api/v1/books?genre           | Get all books by genre, optionally sorted by rating or creation date   |
-  | GET    | /api/v1/books/{id}            | Get a specific book with author information and comments               |
-  | GET    | /api/v1/books?author          | Get all books by author, optionally sorted by rating or creation date  |
-  | GET    | /api/v1/books?user            | Get all books by user, optionally sorted by positive or negative votes |
-  | GET    | /api/v1/genres                | Get all genres, sorted by name in ascending order                      |
-
 ### Author Service
 Provides author profiles, including biographical information and statistics. Users can search for authors and explore their data. This service class consumes messages from the Kafka topic related to author votes. It processes these messages, updates the corresponding author's information based on the received vote, and persists the changes.
 
   | Method | Path                            | Description                                            |
   |--------|---------------------------------|--------------------------------------------------------|
-  | GET    | /api/v1/authors/user/{id}/count | Get the count of users who voted for a specific author |
-  | GET    | /api/v1/authors/{id}            | Get a specific author                                  |
-  | GET    | /api/v1/authors/user/{id}       | Get all authors voted by a specific user               |
+  | GET    | 9876/api/v1/authors/user/{id}/count | Get the count of users who voted for a specific author |
+  | GET    | 9876/api/v1/authors/{id}            | Get a specific author                                  |
+  | GET    | 9876/api/v1/authors/user/{id}       | Get all authors voted by a specific user               |
+
+
+### Book Service
+Allows users to perform operations on books, view detailed information such as title, author, genre, publication date, and ratings, and interact with comments.
+
+  | Method | Path                                                       | Description                                                            |
+  |--------|------------------------------------------------------------|------------------------------------------------------------------------|
+  | GET    | http://fedora39-east-iad:8765/api/v1/books/user/{id}/count | Get the count of books voted by a specific user                        |
+  | GET    | http://fedora39-east-iad:8765/api/v1/books                 | Get all books, optionally sorted by rating or creation date            |
+  | GET    | http://fedora39-east-iad:8765/api/v1/books?genre           | Get all books by genre, optionally sorted by rating or creation date   |
+  | GET    | http://fedora39-east-iad:8765/api/v1/books/{id}            | Get a specific book with author information and comments               |
+  | GET    | http://fedora39-east-iad:8765/api/v1/books?author          | Get all books by author, optionally sorted by rating or creation date  |
+  | GET    | http://fedora39-east-iad:8765/api/v1/books?user            | Get all books by user, optionally sorted by positive or negative votes |
+  | GET    | http://fedora39-east-iad:8765/api/v1/genres                | Get all genres, sorted by name in ascending order                      |
+
 
 ### Comment Service
 Manages user comments on books, including fetching by book or user ID and counting by user ID.
 
-  | Method | Path                             | Description                                                            |
-  |--------|----------------------------------|------------------------------------------------------------------------|
-  | GET    | /api/v1/comments/user/{id}/count | Get the count of comments made by a specific user                      |
-  | GET    | /api/v1/comments/book/{id}       | Get all comments for a specific book, sorted by creation date          |
-  | GET    | /api/v1/comments/user/{id}       | Get all comments made by a specific user, with associated book details |
+  | Method | Path                                                          | Description                                                            
+  |--------|---------------------------------------------------------------|------------------------------------------------------------------------
+  | GET    | http://fedora39-east-iad:9877/api/v1/comments/user/{id}/count | Get the count of comments made by a specific user                      
+  | GET    | http://fedora39-east-iad:9877/api/v1/comments/book/{id}       | Get all comments for a specific book, sorted by creation date          
+  | GET    | http://fedora39-east-iad:9877/api/v1/comments/user/{id}       | Get all comments made by a specific user, with associated book details
 
 ### User Server
 Implements secure user registration, authentication via username/password, and JWT-based token authentication.
 
-  | Method | Path                  | Description                                        |
-  |--------|-----------------------|----------------------------------------------------|
-  | POST   | /api/v1/auth/signup   | Sign up a new user                                 |
-  | POST   | /api/v1/auth/signin   | Sign in a user                                     |
-  | POST   | /api/v1/auth/validate | Validate a token                                   |
-  | GET    | /api/v1/user/my       | Get account information for the authenticated user |
-  | GET    | /api/v1/user/{id}     | Get information for a specific user                |
+  | Method | Path                                               | Description                                        |
+  |--------|----------------------------------------------------|----------------------------------------------------|
+  | POST   | http://fedora39-east-iad:8083/api/v1/auth/signup   | Sign up a new user                                 |
+  | POST   | http://fedora39-east-iad:8083/api/v1/auth/signin   | Sign in a user                                     |
+  | POST   | http://fedora39-east-iad:8083/api/v1/auth/validate | Validate a token                                   |
+  | GET    | http://fedora39-east-iad:8083/api/v1/user/my       | Get account information for the authenticated user |
+  | GET    | http://fedora39-east-iad:8083/api/v1/user/{id}     | Get information for a specific user                |
 
 ### Vote Service
 Manages votes from users for authors. It encompasses functionalities for receiving, handling, and processing votes initiated by users through RESTful APIs. Additionally, it includes the capability to send messages related to author votes to a Kafka topic using a reactive Kafka producer.
 
-| Method | Path                  | Description     |
-|--------|-----------------------|-----------------|
-| POST   | /api/v1/vote/author   | Vote for author |
+| Method | Path                  -----------------------------| Description     |
+|--------|----------------------------------------------------|-----------------|
+| POST   | http://fedora39-east-iad:9885/api/v1/vote/author   | Vote for author |
 
 ## Metrics and Monitoring
 
