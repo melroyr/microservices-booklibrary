@@ -29,11 +29,11 @@ Central entry point routing requests to microservices, providing a unified inter
 ### Author Service
 Provides author profiles, including biographical information and statistics. Users can search for authors and explore their data. This service class consumes messages from the Kafka topic related to author votes. It processes these messages, updates the corresponding author's information based on the received vote, and persists the changes.
 
-  | Method | Path                            | Description                                            |
-  |--------|---------------------------------|--------------------------------------------------------|
-  | GET    | 9876/api/v1/authors/user/{id}/count | Get the count of users who voted for a specific author |
-  | GET    | 9876/api/v1/authors/{id}            | Get a specific author                                  |
-  | GET    | 9876/api/v1/authors/user/{id}       | Get all authors voted by a specific user               |
+  | Method | Path                                                         | Description                                            |
+  |--------|--------------------------------------------------------------|--------------------------------------------------------|
+  | GET    | http://fedora39-east-iad:9876/api/v1/authors/user/{id}/count | Get the count of users who voted for a specific author |
+  | GET    | http://fedora39-east-iad:9876/api/v1/authors/{id}            | Get a specific author                                  |
+  | GET    | http://fedora39-east-iad:9876/api/v1/authors/user/{id}       | Get all authors voted by a specific user               |
 
 
 ### Book Service
